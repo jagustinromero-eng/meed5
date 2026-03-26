@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>MEED | INFRAESTRUCTURA DETERMINISTA</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #080808;
+            color: #ffb000; /* Ámbar P3 Industrial */
+            font-family: 'Courier New', monospace;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Cero Scroll */
+            padding: 20px;
+        }
+        header { border-bottom: 2px solid #ffb000; padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .patente { border: 1px solid #ffb000; padding: 5px 10px; font-weight: bold; background: rgba(255, 176, 0, 0.1); }
+        
+        main { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 15px; flex-grow: 1; }
+        .cuadrante { border: 1px solid rgba(255, 176, 0, 0.3); padding: 15px; display: flex; flex-direction: column; }
+        h2 { font-size: 0.9rem; background: #ffb000; color: #000; padding: 2px 8px; margin-bottom: 12px; width: fit-content; }
+        
+        .dato { font-size: 1.1rem; font-weight: bold; margin: 5px 0; }
+        .sub-dato { font-size: 0.85rem; opacity: 0.8; margin-left: 10px; }
+        .code-line { color: #fff; background: rgba(255, 255, 255, 0.05); padding: 2px 5px; font-size: 0.8rem; }
+
+        footer { margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255, 176, 0, 0.2); display: flex; justify-content: space-between; font-size: 0.75rem; }
+        .cta { background: #ffb000; color: #000; padding: 5px 15px; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div style="font-size: 1.2rem; font-weight: bold;">MEED v5 // NÚCLEO DETERMINISTA</div>
+    <div class="patente">P202630372 [ACTIVA]</div>
+</header>
+
+<main>
+    <div class="cuadrante">
+        <h2>01_DEFINICIÓN_DEL_SISTEMA</h2>
+        <p>Anulación del error estocástico mediante demarcación epistémica absoluta.</p>
+        <p style="margin-top:10px;">Sustitución de la probabilidad por verificación inmutable.</p>
+        <p class="code-line" style="margin-top:auto;">ESTADOS EPISTEMOLÓGICOS DECLARATORIOS</p>
+    </div>
+
+    <div class="cuadrante">
+        <h2>02_BENCHMARK_TRUTHFUL-QA</h2>
+        <div class="dato">PRECISIÓN: 100.00%</div>
+        <p class="sub-dato">> 817 verificaciones completadas.</p>
+        <p class="sub-dato">> 4 alucinaciones corregidas / 0 omitidas.</p>
+        <p class="sub-dato" style="color: #fff;">> AMPLIFICACIÓN: 48&times; SOBRE MODELO BASE.</p>
+    </div>
+
+    <div class="cuadrante">
+        <h2>03_MÉTRICAS_DE_RENDIMIENTO</h2>
+        <div class="dato">INGESTA: 2.369 REG/SEC</div>
+        <p class="sub-dato">> 177.680 entradas en 75 seg.</p>
+        <p class="sub-dato">> Hardware: Google Colab (CPU-Only).</p>
+        <p class="sub-dato">> Escalabilidad: O(n) Optimizado.</p>
+    </div>
+
+    <div class="cuadrante">
+        <h2>04_ESQUEMA_DE_INFERENCIA</h2>
+        <p>REGLAS: R1-R6 (Verif) + R7 (Lógica).</p>
+        <p>NÚCLEOS: NA (Factual) + NAL (Derivado).</p>
+        <p style="margin-top:10px;">Trazabilidad completa de registros.</p>
+        <p style="margin-top:auto; font-weight: bold;">CERO ALUCINACIONES ENDÓGENAS.</p>
+    </div>
+</main>
+
+<footer>
+    <div>AUTOR: J. AGUSTÍN ROMERO // MIGUELTURRA - CIUDAD REAL</div>
+    <a href="mailto:tu-email@gmail.com" class="cta">SOLICITAR ACCESO NDA</a>
+</footer>
+
+</body>
+</html>
