@@ -8,7 +8,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #080808;
-            color: #ffb000; /* Ámbar P3 Industrial */
+            color: #ffb000;
             font-family: 'Courier New', monospace;
             min-height: 100vh;
             display: flex;
@@ -24,6 +24,30 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .lang-selector {
+            display: flex;
+            gap: 5px;
+        }
+        .lang-selector a {
+            color: #ffb000;
+            text-decoration: none;
+            padding: 2px 6px;
+            border: 1px solid #ffb000;
+            font-size: 0.75rem;
+        }
+        .lang-selector a.active {
+            background: #ffb000;
+            color: #000;
+        }
+        .lang-selector a:hover {
+            background: rgba(255, 176, 0, 0.3);
         }
         .patente { border: 1px solid #ffb000; padding: 5px 10px; font-weight: bold; background: rgba(255, 176, 0, 0.1); }
         
@@ -48,73 +72,41 @@
         }
         .cta { background: #ffb000; color: #000; padding: 5px 15px; text-decoration: none; font-weight: bold; }
 
-        /* RESPONSIVE */
         @media (max-width: 768px) {
-            body {
-                padding: 15px;
-            }
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            header > div:first-child {
-                font-size: 1rem;
-            }
-            main {
-                grid-template-columns: 1fr;
-            }
-            .cuadrante {
-                padding: 12px;
-            }
-            h2 {
-                font-size: 0.8rem;
-            }
-            .dato {
-                font-size: 1rem;
-            }
-            .sub-dato {
-                font-size: 0.8rem;
-                margin-left: 5px;
-            }
-            footer {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-            .cta {
-                width: 100%;
-                text-align: center;
-                padding: 10px 15px;
-            }
+            body { padding: 15px; }
+            header { flex-direction: column; align-items: flex-start; }
+            .header-left { width: 100%; justify-content: space-between; }
+            header > div:first-child { font-size: 1rem; }
+            main { grid-template-columns: 1fr; }
+            .cuadrante { padding: 12px; }
+            h2 { font-size: 0.8rem; }
+            .dato { font-size: 1rem; }
+            .sub-dato { font-size: 0.8rem; margin-left: 5px; }
+            footer { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .cta { width: 100%; text-align: center; padding: 10px 15px; }
         }
 
         @media (max-width: 400px) {
-            body {
-                padding: 10px;
-            }
-            header > div:first-child {
-                font-size: 0.9rem;
-            }
-            .patente {
-                font-size: 0.75rem;
-                padding: 4px 8px;
-            }
-            h2 {
-                font-size: 0.75rem;
-            }
-            .dato {
-                font-size: 0.9rem;
-            }
-            .sub-dato {
-                font-size: 0.75rem;
-            }
+            body { padding: 10px; }
+            header > div:first-child { font-size: 0.9rem; }
+            .patente { font-size: 0.75rem; padding: 4px 8px; }
+            h2 { font-size: 0.75rem; }
+            .dato { font-size: 0.9rem; }
+            .sub-dato { font-size: 0.75rem; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <div style="font-size: 1.2rem; font-weight: bold;">MEED v5 // NÚCLEO DETERMINISTA</div>
+    <div class="header-left">
+        <div style="font-size: 1.2rem; font-weight: bold;">MEED v5 // NÚCLEO DETERMINISTA</div>
+        <div class="lang-selector">
+            <a href="index.html" class="active">ES</a>
+            <a href="en.html">EN</a>
+            <a href="fr.html">FR</a>
+        </div>
+    </div>
     <div class="patente">P202630372 [ACTIVA]</div>
 </header>
 
@@ -146,15 +138,4 @@
         <h2>04_ESQUEMA_DE_INFERENCIA</h2>
         <p>REGLAS: R1-R6 (Verif) + R7 (Lógica).</p>
         <p>NÚCLEOS: NA (Factual) + NAL (Derivado).</p>
-        <p style="margin-top:10px;">Trazabilidad completa de registros.</p>
-        <p style="margin-top:auto; font-weight: bold;">CERO ALUCINACIONES ENDÓGENAS.</p>
-    </div>
-</main>
-
-<footer>
-    <div>AUTOR: J. AGUSTÍN ROMERO // MIGUELTURRA - CIUDAD REAL</div>
-    <a href="mailto:agustin@meed5.com" class="cta">SOLICITAR ACCESO NDA</a>
-</footer>
-
-</body>
-</html>
+        <p style="margin-top:10px;">Trazabilidad comple
