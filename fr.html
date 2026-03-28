@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEED | INFRASTRUCTURE DÉTERMINISTE</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #080808;
+            color: #ffb000;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        header { 
+            border-bottom: 2px solid #ffb000; 
+            padding-bottom: 10px; 
+            margin-bottom: 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .lang-selector {
+            display: flex;
+            gap: 5px;
+        }
+        .lang-selector a {
+            color: #ffb000;
+            text-decoration: none;
+            padding: 2px 6px;
+            border: 1px solid #ffb000;
+            font-size: 0.75rem;
+        }
+        .lang-selector a.active {
+            background: #ffb000;
+            color: #000;
+        }
+        .lang-selector a:hover {
+            background: rgba(255, 176, 0, 0.3);
+        }
+        .patente { border: 1px solid #ffb000; padding: 5px 10px; font-weight: bold; background: rgba(255, 176, 0, 0.1); }
+        
+        main { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; flex-grow: 1; }
+        .cuadrante { border: 1px solid rgba(255, 176, 0, 0.3); padding: 15px; display: flex; flex-direction: column; }
+        h2 { font-size: 0.9rem; background: #ffb000; color: #000; padding: 2px 8px; margin-bottom: 12px; width: fit-content; }
+        
+        .dato { font-size: 1.1rem; font-weight: bold; margin: 5px 0; }
+        .sub-dato { font-size: 0.85rem; opacity: 0.8; margin-left: 10px; }
+        .code-line { color: #fff; background: rgba(255, 255, 255, 0.05); padding: 2px 5px; font-size: 0.8rem; }
+
+        footer { 
+            margin-top: 15px; 
+            padding-top: 10px; 
+            border-top: 1px solid rgba(255, 176, 0, 0.2); 
+            display: flex; 
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.75rem; 
+        }
+        .cta { background: #ffb000; color: #000; padding: 5px 15px; text-decoration: none; font-weight: bold; }
+
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            header { flex-direction: column; align-items: flex-start; }
+            .header-left { width: 100%; justify-content: space-between; }
+            header > div:first-child { font-size: 1rem; }
+            main { grid-template-columns: 1fr; }
+            .cuadrante { padding: 12px; }
+            h2 { font-size: 0.8rem; }
+            .dato { font-size: 1rem; }
+            .sub-dato { font-size: 0.8rem; margin-left: 5px; }
+            footer { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .cta { width: 100%; text-align: center; padding: 10px 15px; }
+        }
+
+        @media (max-width: 400px) {
+            body { padding: 10px; }
+            header > div:first-child { font-size: 0.9rem; }
+            .patente { font-size: 0.75rem; padding: 4px 8px; }
+            h2 { font-size: 0.75rem; }
+            .dato { font-size: 0.9rem; }
+            .sub-dato { font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <div style="font-size: 1.2rem; font-weight: bold;">MEED v5 // NOYAU DÉTERMINISTE</div>
+        <div class="lang-selector">
+            <a href="index.html">ES</a>
+            <a href="en.html">EN</a>
+            <a href="fr.html" class="active">FR</a>
+        </div>
+    </div>
+    <div class="patente">P202630372 [ACTIF]</div>
+</header>
+
+<main>
+    <div class="cuadrante">
+        <h2>01_DÉFINITION_DU_SYSTÈME</h2>
+        <p>Élimination de l'erreur stochastique par démarcation épistémique absolue.</p>
+        <p style="margin-top:10px;">Remplacement de la probabilité par une vérification immuable.</p>
+        <p class="code-line" style="margin-top:auto;">ÉTATS ÉPISTÉMOLOGIQUES DÉCLARATOIRES</p>
+    </div>
+
+    <div class="cuadrante">
+        <h2>02_BENCHMARK_TRUTHFUL-QA</h2>
+        <div class="dato">PRÉCISION: 100.00%</div>
+        <p class="sub-dato">> 817 vérifications complétées.</p>
+        <p class="sub-dato">> 4 hallucinations corrigées / 0 manquées.</p>
+        <p class="sub-dato" style="color: #fff;">> AMPLIFICATION: 48&times; SUR MODÈLE DE BASE.</p>
+    </div>
+
+    <div class="cuadrante">
+        <h2>03_MÉTRIQUES_DE_PERFORMANCE</h2>
+        <div class="dato">INGESTION: 2 369 ENR/SEC</div>
+        <p class="sub-dato">> 177 680 entrées en 75 sec.</p>
+        <p class="sub-dato">> Matériel: Google Colab (CPU uniquement).</p>
+        <p class="sub-dato">> Évolutivité: O(n) Optimisé.</p>
+    </div>
+
+    <div class="cuadrante">
+        <h2>04_SCHÉMA_D'INFÉRENCE</h2>
+        <p>RÈGLES: R1-R6 (Vérif) + R7 (Logique).</p>
+        <p>NOYAUX: NA (Factuel) + NAL (Dérivé).</p>
+        <p style="margin-top:10px;">Traçabilité complète des registres.</p>
+        <p style="margin-top:auto; font-weight: bold;">ZÉRO HALLUCINATIONS ENDOGÈNES.</p>
+    </div>
+</main>
+
+<footer>
+    <div>AUTEUR: J. AGUSTÍN ROMERO // MIGUELTURRA - CIUDAD REAL</div>
+    <a href="mailto:agustin@meed5.com" class="cta">DEMANDER ACCÈS NDA</a>
+</footer>
+
+</body>
+</html>
