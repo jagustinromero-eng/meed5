@@ -1,26 +1,31 @@
 <!DOCTYPE html>
+<!--
+MEED visual palette: P31-inspired green phosphor on black.
+Author: José Agustín Romero
+-->
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="José Agustín Romero">
     <title>MEED | INFRAESTRUCTURA DETERMINISTA</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: #080808;
-            color: #ffb000;
+            background: #050705;
+            color: #3cff6f;
             font-family: 'Courier New', monospace;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             padding: 20px;
         }
-        header { 
-            border-bottom: 2px solid #ffb000; 
-            padding-bottom: 10px; 
-            margin-bottom: 20px; 
-            display: flex; 
-            justify-content: space-between; 
+        header {
+            border-bottom: 2px solid #3cff6f;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
@@ -31,122 +36,352 @@
             gap: 15px;
             flex-wrap: wrap;
         }
-        .lang-selector {
-            display: flex;
-            gap: 5px;
+        .lang-selector { display:flex; gap:5px; }
+        .lang-btn {
+            color:#3cff6f;
+            background:transparent;
+            border:1px solid #3cff6f;
+            padding:2px 6px;
+            font-family:'Courier New', monospace;
+            font-size:.75rem;
+            cursor:pointer;
         }
-        .lang-selector a {
-            color: #ffb000;
-            text-decoration: none;
-            padding: 2px 6px;
-            border: 1px solid #ffb000;
-            font-size: 0.75rem;
+        .lang-btn.active { background:#3cff6f; color:#000; }
+        .lang-btn:hover { background:rgba(60,255,111,.15); }
+        .patente {
+            border:1px solid #3cff6f;
+            padding:5px 10px;
+            font-weight:bold;
+            background:rgba(60,255,111,.10);
         }
-        .lang-selector a.active {
-            background: #ffb000;
-            color: #000;
+        main {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:15px;
+            flex-grow:1;
         }
-        .lang-selector a:hover {
-            background: rgba(255, 176, 0, 0.3);
+        .cuadrante {
+            border:1px solid rgba(60,255,111,.30);
+            padding:15px;
+            display:flex;
+            flex-direction:column;
+            min-height:165px;
         }
-        .patente { border: 1px solid #ffb000; padding: 5px 10px; font-weight: bold; background: rgba(255, 176, 0, 0.1); }
-        
-        main { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; flex-grow: 1; }
-        .cuadrante { border: 1px solid rgba(255, 176, 0, 0.3); padding: 15px; display: flex; flex-direction: column; }
-        h2 { font-size: 0.9rem; background: #ffb000; color: #000; padding: 2px 8px; margin-bottom: 12px; width: fit-content; }
-        
-        .dato { font-size: 1.1rem; font-weight: bold; margin: 5px 0; }
-        .sub-dato { font-size: 0.85rem; opacity: 0.8; margin-left: 10px; }
-        .code-line { color: #fff; background: rgba(255, 255, 255, 0.05); padding: 2px 5px; font-size: 0.8rem; }
+        h2 {
+            font-size:.9rem;
+            background:#3cff6f;
+            color:#000;
+            padding:2px 8px;
+            margin-bottom:12px;
+            width:fit-content;
+        }
+        .dato { font-size:1.1rem; font-weight:bold; margin:5px 0; }
+        .sub-dato { font-size:.85rem; opacity:.8; margin-left:10px; }
+        .code-line {
+            color:#7dff9b;
+            background:rgba(255,255,255,.05);
+            padding:2px 5px;
+            font-size:.8rem;
+        }
+        .demo-card {
+            border-color:rgba(60,255,111,.80);
+            box-shadow:inset 0 0 0 1px rgba(60,255,111,.08);
+            grid-column:1 / -1;
+        }
+        .demo-card .dato { color:#7dff9b; }
+        .demo-card p { line-height:1.45; }
+        .demo-cta {
+            display:inline-block;
+            margin-top:auto;
+            padding:9px 14px;
+            background:#3cff6f;
+            color:#000;
+            text-decoration:none;
+            font-weight:bold;
+            width:fit-content;
+        }
+        footer {
+            margin-top:15px;
+            padding-top:10px;
+            border-top:1px solid rgba(60,255,111,.20);
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:10px;
+            font-size:.75rem;
+        }
+        .footer-actions { display:flex; gap:8px; flex-wrap:wrap; }
+        .cta {
+            background:#3cff6f;
+            color:#000;
+            padding:5px 15px;
+            text-decoration:none;
+            font-weight:bold;
+        }
+        .cta.secondary {
+            background:transparent;
+            color:#3cff6f;
+            border:1px solid #3cff6f;
+        }
+        @media (max-width:768px) {
+            body { padding:15px; }
+            header { flex-direction:column; align-items:flex-start; }
+            .header-left { width:100%; justify-content:space-between; }
+            main { grid-template-columns:1fr; }
+            .cuadrante { padding:12px; }
+            h2 { font-size:.8rem; }
+            .dato { font-size:1rem; }
+            .sub-dato { font-size:.8rem; margin-left:5px; }
+            footer { flex-direction:column; align-items:flex-start; gap:15px; }
+            .footer-actions { width:100%; }
+            .cta, .demo-cta { width:100%; text-align:center; padding:10px 15px; }
+        }
+    
+        .system-name {
+            grid-column: 1 / -1;
+            border: 1px solid rgba(60,255,111,.35);
+            padding: 14px 16px;
+            background: rgba(60,255,111,.025);
+        }
+        .system-name-es {
+            color: #7dff9b;
+            font-weight: bold;
+            font-size: 1.02rem;
+            line-height: 1.45;
+        }
+        .system-name-local {
+            color: #25b84f;
+            font-size: .9rem;
+            line-height: 1.45;
+            margin-top: 3px;
+        }
 
-        footer { 
-            margin-top: 15px; 
-            padding-top: 10px; 
-            border-top: 1px solid rgba(255, 176, 0, 0.2); 
-            display: flex; 
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            font-size: 0.75rem; 
-        }
-        .cta { background: #ffb000; color: #000; padding: 5px 15px; text-decoration: none; font-weight: bold; }
-
-        @media (max-width: 768px) {
-            body { padding: 15px; }
-            header { flex-direction: column; align-items: flex-start; }
-            .header-left { width: 100%; justify-content: space-between; }
-            header > div:first-child { font-size: 1rem; }
-            main { grid-template-columns: 1fr; }
-            .cuadrante { padding: 12px; }
-            h2 { font-size: 0.8rem; }
-            .dato { font-size: 1rem; }
-            .sub-dato { font-size: 0.8rem; margin-left: 5px; }
-            footer { flex-direction: column; align-items: flex-start; gap: 15px; }
-            .cta { width: 100%; text-align: center; padding: 10px 15px; }
-        }
-
-        @media (max-width: 400px) {
-            body { padding: 10px; }
-            header > div:first-child { font-size: 0.9rem; }
-            .patente { font-size: 0.75rem; padding: 4px 8px; }
-            h2 { font-size: 0.75rem; }
-            .dato { font-size: 0.9rem; }
-            .sub-dato { font-size: 0.75rem; }
-        }
     </style>
 </head>
 <body>
-
 <header>
     <div class="header-left">
-        <div style="font-size: 1.2rem; font-weight: bold;">MEED v5 // NÚCLEO DETERMINISTA</div>
-        <div class="lang-selector">
-            <a href="index.html" class="active">ES</a>
-            <a href="en.html">EN</a>
-            <a href="fr.html">FR</a>
+        <div id="headerTitle" style="font-size:1.2rem;font-weight:bold;">MEED v5 // NÚCLEO DETERMINISTA</div>
+        <div class="lang-selector" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="es">ES</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="fr">FR</button>
+            <button class="lang-btn" data-lang="pt">PT</button>
         </div>
     </div>
     <div class="patente">P202630372</div>
 </header>
 
 <main>
+    <div class="system-name">
+        <div id="systemNameEs" class="system-name-es">MEED — Motor Epistemológico de Examinación Determinista</div>
+        <div id="systemNameLocal" class="system-name-local" style="display:none;"></div>
+    </div>
     <div class="cuadrante">
-        <h2>01_DEFINICIÓN_DEL_SISTEMA</h2>
-        <p>Anulación del error estocástico mediante demarcación epistémica absoluta.</p>
-        <p style="margin-top:10px;">Sustitución de la probabilidad por verificación inmutable.</p>
-        <p class="code-line" style="margin-top:auto;">ESTADOS EPISTEMOLÓGICOS DECLARATORIOS</p>
+        <h2 id="hDef">01_DEFINICIÓN_DEL_SISTEMA</h2>
+        <p id="def1">Anulación del error estocástico mediante demarcación epistémica absoluta.</p>
+        <p id="def2" style="margin-top:10px;">Sustitución de la probabilidad por verificación inmutable.</p>
+        <p id="defCode" class="code-line" style="margin-top:auto;">ESTADOS EPISTEMOLÓGICOS DECLARATORIOS</p>
     </div>
 
     <div class="cuadrante">
-        <h2>02_BENCHMARK_TRUTHFUL-QA</h2>
-        <div class="dato">PRECISIÓN: 100.00%</div>
-        <p class="sub-dato">> 817 verificaciones completadas.</p>
-        <p class="sub-dato">> 4 alucinaciones corregidas / 0 omitidas.</p>
-        <p class="sub-dato" style="color: #fff;">> AMPLIFICACIÓN: 48&times; SOBRE MODELO BASE.</p>
+        <h2 id="hBench">02_BENCHMARK_TRUTHFUL-QA</h2>
+        <div id="benchMain" class="dato">PRECISIÓN: 100.00%</div>
+        <p id="bench1" class="sub-dato">&gt; 817 verificaciones completadas.</p>
+        <p id="bench2" class="sub-dato">&gt; 4 alucinaciones corregidas / 0 omitidas.</p>
+        <p id="bench3" class="sub-dato" style="color:#7dff9b;">&gt; AMPLIFICACIÓN: 48× SOBRE MODELO BASE.</p>
     </div>
 
     <div class="cuadrante">
-        <h2>03_MÉTRICAS_DE_RENDIMIENTO</h2>
-        <div class="dato">INGESTA: 2.369 REG/SEC</div>
-        <p class="sub-dato">> 177.680 entradas en 75 seg.</p>
-        <p class="sub-dato">> Hardware: Google Colab (CPU-Only).</p>
-        <p class="sub-dato">> Escalabilidad: O(n) Optimizado.</p>
+        <h2 id="hMetrics">03_MÉTRICAS_DE_RENDIMIENTO</h2>
+        <div id="metricMain" class="dato">INGESTA: 2.369 REG/SEC</div>
+        <p id="metric1" class="sub-dato">&gt; 177.680 entradas en 75 seg.</p>
+        <p id="metric2" class="sub-dato">&gt; Hardware: Google Colab (CPU-Only).</p>
+        <p id="metric3" class="sub-dato">&gt; Escalabilidad: O(n) Optimizado.</p>
     </div>
 
     <div class="cuadrante">
-        <h2>04_ESQUEMA_DE_INFERENCIA</h2>
-        <p>REGLAS: R1-R6 (Verif) + R7 (Lógica).</p>
-        <p>NÚCLEOS: NA (Factual) + NAL (Derivado).</p>
-        <p style="margin-top:10px;">Trazabilidad completa de registros.</p>
-        <p style="margin-top:auto; font-weight: bold;">CERO ALUCINACIONES ENDÓGENAS.</p>
+        <h2 id="hInference">04_ESQUEMA_DE_INFERENCIA</h2>
+        <p id="inf1">REGLAS: R1-R6 (Verif) + R7 (Lógica).</p>
+        <p id="inf2">NÚCLEOS: NA (Factual) + NAL (Derivado).</p>
+        <p id="inf3" style="margin-top:10px;">Trazabilidad completa de registros.</p>
+        <p id="inf4" style="margin-top:auto;font-weight:bold;">CERO ALUCINACIONES ENDÓGENAS.</p>
+    </div>
+
+    <div class="cuadrante demo-card">
+        <h2 id="hDemo">05_DEMOSTRACIÓN_DE_CONSULTA</h2>
+        <div id="demoMain" class="dato">CASO DE USO: STARCRAFT II</div>
+        <p id="demoP">Ejemplo visual de consulta determinista sobre un núcleo epistemológico previamente construido y estabilizado.</p>
+        <p id="demo1" class="sub-dato" style="margin-top:8px;">&gt; Sin lenguaje natural libre.</p>
+        <p id="demo2" class="sub-dato">&gt; Sin ingesta durante la consulta.</p>
+        <p id="demo3" class="sub-dato">&gt; Preguntas construidas mediante opciones prefijadas.</p>
+        <a id="demoButton" class="demo-cta" href="demo-sc2.html?lang=es">PROBAR DEMOSTRACIÓN VISUAL</a>
     </div>
 </main>
 
 <footer>
-    <div>AUTOR: J. A. ROMERO // CIUDAD REAL</div>
-    <a href="mailto:agustin@meed5.com" class="cta">SOLICITAR ACCESO NDA</a>
+    <div id="author">AUTOR: J. A. R. // CIUDAD REAL</div>
+    <div class="footer-actions">
+        <a id="tryButton" href="demo-sc2.html?lang=es" class="cta secondary">PROBAR MEED</a>
+        <a id="ndaButton" href="mailto:agustin@meed5.com" class="cta">SOLICITAR ACCESO NDA</a>
+    </div>
 </footer>
 
+<script>
+const T = {
+es:{
+systemNameEs:"MEED — Motor Epistemológico de Examinación Determinista",systemNameLocal:"",
+headerTitle:"MEED v5 // NÚCLEO DETERMINISTA",
+hDef:"01_DEFINICIÓN_DEL_SISTEMA",
+def1:"Anulación del error estocástico mediante demarcación epistémica absoluta.",
+def2:"Sustitución de la probabilidad por verificación inmutable.",
+defCode:"ESTADOS EPISTEMOLÓGICOS DECLARATORIOS",
+hBench:"02_BENCHMARK_TRUTHFUL-QA",
+benchMain:"PRECISIÓN: 100.00%",
+bench1:"> 817 verificaciones completadas.",
+bench2:"> 4 alucinaciones corregidas / 0 omitidas.",
+bench3:"> AMPLIFICACIÓN: 48× SOBRE MODELO BASE.",
+hMetrics:"03_MÉTRICAS_DE_RENDIMIENTO",
+metricMain:"INGESTA: 2.369 REG/SEC",
+metric1:"> 177.680 entradas en 75 seg.",
+metric2:"> Hardware: Google Colab (CPU-Only).",
+metric3:"> Escalabilidad: O(n) Optimizado.",
+hInference:"04_ESQUEMA_DE_INFERENCIA",
+inf1:"REGLAS: R1-R6 (Verif) + R7 (Lógica).",
+inf2:"NÚCLEOS: NA (Factual) + NAL (Derivado).",
+inf3:"Trazabilidad completa de registros.",
+inf4:"CERO ALUCINACIONES ENDÓGENAS.",
+hDemo:"05_DEMOSTRACIÓN_DE_CONSULTA",
+demoMain:"CASO DE USO: STARCRAFT II",
+demoP:"Ejemplo visual de consulta determinista sobre un núcleo epistemológico previamente construido y estabilizado.",
+demo1:"> Sin lenguaje natural libre.",
+demo2:"> Sin ingesta durante la consulta.",
+demo3:"> Preguntas construidas mediante opciones prefijadas.",
+demoButton:"PROBAR DEMOSTRACIÓN VISUAL",
+author:"AUTOR: J. A. R. // CIUDAD REAL",
+tryButton:"PROBAR MEED",
+ndaButton:"SOLICITAR ACCESO NDA"
+},
+en:{
+systemNameEs:"MEED — Motor Epistemológico de Examinación Determinista",systemNameLocal:"MEED — Deterministic Epistemological Examination Engine",
+headerTitle:"MEED v5 // DETERMINISTIC CORE",
+hDef:"01_SYSTEM_DEFINITION",
+def1:"Elimination of stochastic error through absolute epistemic demarcation.",
+def2:"Replacement of probability with immutable verification.",
+defCode:"DECLARATIVE EPISTEMOLOGICAL STATES",
+hBench:"02_BENCHMARK_TRUTHFUL-QA",
+benchMain:"ACCURACY: 100.00%",
+bench1:"> 817 verifications completed.",
+bench2:"> 4 hallucinations corrected / 0 missed.",
+bench3:"> AMPLIFICATION: 48× OVER BASE MODEL.",
+hMetrics:"03_PERFORMANCE_METRICS",
+metricMain:"INGESTION: 2,369 REC/SEC",
+metric1:"> 177,680 entries in 75 sec.",
+metric2:"> Hardware: Google Colab (CPU-Only).",
+metric3:"> Scalability: O(n) Optimized.",
+hInference:"04_INFERENCE_SCHEMA",
+inf1:"RULES: R1-R6 (Verification) + R7 (Logic).",
+inf2:"CORES: NA (Factual) + NAL (Derived).",
+inf3:"Full record traceability.",
+inf4:"ZERO ENDOGENOUS HALLUCINATIONS.",
+hDemo:"05_QUERY_DEMONSTRATION",
+demoMain:"USE CASE: STARCRAFT II",
+demoP:"Visual example of deterministic querying over a previously built and stabilized epistemological core.",
+demo1:"> No unrestricted natural language.",
+demo2:"> No ingestion during the query.",
+demo3:"> Questions built through predefined options.",
+demoButton:"OPEN VISUAL DEMONSTRATION",
+author:"AUTHOR: J. A. R. // CIUDAD REAL",
+tryButton:"TRY MEED",
+ndaButton:"REQUEST NDA ACCESS"
+},
+fr:{
+systemNameEs:"MEED — Motor Epistemológico de Examinación Determinista",systemNameLocal:"MEED — Moteur Épistémologique d’Examen Déterministe",
+headerTitle:"MEED v5 // NOYAU DÉTERMINISTE",
+hDef:"01_DÉFINITION_DU_SYSTÈME",
+def1:"Élimination de l'erreur stochastique par démarcation épistémique absolue.",
+def2:"Remplacement de la probabilité par une vérification immuable.",
+defCode:"ÉTATS ÉPISTÉMOLOGIQUES DÉCLARATIFS",
+hBench:"02_BENCHMARK_TRUTHFUL-QA",
+benchMain:"PRÉCISION : 100.00%",
+bench1:"> 817 vérifications effectuées.",
+bench2:"> 4 hallucinations corrigées / 0 omise.",
+bench3:"> AMPLIFICATION : 48× PAR RAPPORT AU MODÈLE DE BASE.",
+hMetrics:"03_MÉTRIQUES_DE_PERFORMANCE",
+metricMain:"INGESTION : 2 369 ENR/SEC",
+metric1:"> 177 680 entrées en 75 s.",
+metric2:"> Matériel : Google Colab (CPU uniquement).",
+metric3:"> Évolutivité : O(n) optimisée.",
+hInference:"04_SCHÉMA_D'INFÉRENCE",
+inf1:"RÈGLES : R1-R6 (Vérif.) + R7 (Logique).",
+inf2:"NOYAUX : NA (Factuel) + NAL (Dérivé).",
+inf3:"Traçabilité complète des enregistrements.",
+inf4:"ZÉRO HALLUCINATION ENDOGÈNE.",
+hDemo:"05_DÉMONSTRATION_DE_REQUÊTE",
+demoMain:"CAS D'USAGE : STARCRAFT II",
+demoP:"Exemple visuel de requête déterministe sur un noyau épistémologique préalablement construit et stabilisé.",
+demo1:"> Sans langage naturel libre.",
+demo2:"> Sans ingestion pendant la requête.",
+demo3:"> Questions construites au moyen d'options prédéfinies.",
+demoButton:"OUVRIR LA DÉMONSTRATION VISUELLE",
+author:"AUTEUR : J. A. R. // CIUDAD REAL",
+tryButton:"ESSAYER MEED",
+ndaButton:"DEMANDER UN ACCÈS NDA"
+},
+pt:{
+systemNameEs:"MEED — Motor Epistemológico de Examinación Determinista",systemNameLocal:"MEED — Motor Epistemológico de Exame Determinístico",
+headerTitle:"MEED v5 // NÚCLEO DETERMINÍSTICO",
+hDef:"01_DEFINIÇÃO_DO_SISTEMA",
+def1:"Eliminação do erro estocástico por meio de demarcação epistémica absoluta.",
+def2:"Substituição da probabilidade por verificação imutável.",
+defCode:"ESTADOS EPISTEMOLÓGICOS DECLARATIVOS",
+hBench:"02_BENCHMARK_TRUTHFUL-QA",
+benchMain:"PRECISÃO: 100.00%",
+bench1:"> 817 verificações concluídas.",
+bench2:"> 4 alucinações corrigidas / 0 omitidas.",
+bench3:"> AMPLIFICAÇÃO: 48× SOBRE O MODELO BASE.",
+hMetrics:"03_MÉTRICAS_DE_DESEMPENHO",
+metricMain:"INGESTÃO: 2.369 REG/SEC",
+metric1:"> 177.680 entradas em 75 s.",
+metric2:"> Hardware: Google Colab (CPU-Only).",
+metric3:"> Escalabilidade: O(n) otimizada.",
+hInference:"04_ESQUEMA_DE_INFERÊNCIA",
+inf1:"REGRAS: R1-R6 (Verif.) + R7 (Lógica).",
+inf2:"NÚCLEOS: NA (Factual) + NAL (Derivado).",
+inf3:"Rastreabilidade completa dos registos.",
+inf4:"ZERO ALUCINAÇÕES ENDÓGENAS.",
+hDemo:"05_DEMONSTRAÇÃO_DE_CONSULTA",
+demoMain:"CASO DE USO: STARCRAFT II",
+demoP:"Exemplo visual de consulta determinística sobre um núcleo epistemológico previamente construído e estabilizado.",
+demo1:"> Sem linguagem natural livre.",
+demo2:"> Sem ingestão durante a consulta.",
+demo3:"> Perguntas construídas através de opções predefinidas.",
+demoButton:"ABRIR DEMONSTRAÇÃO VISUAL",
+author:"AUTOR: J. A. R. // CIUDAD REAL",
+tryButton:"TESTAR MEED",
+ndaButton:"SOLICITAR ACESSO NDA"
+}
+};
+
+function setLang(lang){
+    if(!T[lang]) lang="es";
+    document.documentElement.lang=lang;
+    for(const [id,value] of Object.entries(T[lang])){
+        const el=document.getElementById(id);
+        if(el) el.textContent=value;
+    }
+    document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("active", b.dataset.lang===lang));
+    const localName=document.getElementById("systemNameLocal");
+    if(localName) localName.style.display = lang==="es" ? "none" : "block";
+    const demoHref="demo-sc2.html?lang="+lang;
+    document.getElementById("demoButton").href=demoHref;
+    document.getElementById("tryButton").href=demoHref;
+    localStorage.setItem("meed_lang",lang);
+}
+document.querySelectorAll(".lang-btn").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
+const qp=new URLSearchParams(location.search).get("lang");
+setLang(qp || localStorage.getItem("meed_lang") || "es");
+</script>
 </body>
 </html>
