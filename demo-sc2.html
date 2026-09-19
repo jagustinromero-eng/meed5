@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<!--
+MEED visual palette: P31-inspired green phosphor on black.
+Author: José Agustín Romero
+-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="José Agustín Romero">
+    <title>MEED | DEMOSTRACIÓN STARCRAFT II</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            background:#050705;
+            color:#3cff6f;
+            font-family:'Courier New', monospace;
+            min-height:100vh;
+            padding:20px;
+        }
+        .wrap {
+            max-width:1180px;
+            margin:0 auto;
+            min-height:calc(100vh - 40px);
+            display:flex;
+            flex-direction:column;
+        }
+        header {
+            border-bottom:2px solid #3cff6f;
+            padding-bottom:10px;
+            margin-bottom:20px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:10px;
+            flex-wrap:wrap;
+        }
+        .header-left { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+        .title { font-size:1.2rem; font-weight:bold; }
+        .lang-selector { display:flex; gap:5px; }
+        .lang-btn {
+            color:#3cff6f;
+            background:transparent;
+            border:1px solid #3cff6f;
+            padding:2px 6px;
+            font-family:'Courier New', monospace;
+            font-size:.75rem;
+            cursor:pointer;
+        }
+        .lang-btn.active { background:#3cff6f; color:#000; }
+        .badge {
+            border:1px solid #3cff6f;
+            padding:5px 10px;
+            font-weight:bold;
+            background:rgba(60,255,111,.10);
+        }
+        .panel {
+            border:1px solid rgba(60,255,111,.35);
+            padding:16px;
+            margin-bottom:14px;
+        }
+        .panel-title {
+            display:inline-block;
+            background:#3cff6f;
+            color:#000;
+            padding:3px 8px;
+            font-size:.85rem;
+            font-weight:bold;
+            margin-bottom:14px;
+        }
+        .notice {
+            color:#7dff9b;
+            font-size:.84rem;
+            line-height:1.55;
+            background:rgba(255,255,255,.04);
+            border-left:2px solid #3cff6f;
+            padding:10px 12px;
+        }
+        .query-flow {
+            display:grid;
+            grid-template-columns:repeat(4,minmax(0,1fr));
+            gap:10px;
+            align-items:center;
+            margin-top:10px;
+        }
+        .fake-select {
+            border:1px solid #3cff6f;
+            min-height:54px;
+            padding:8px 12px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            background:rgba(60,255,111,.03);
+        }
+        .fake-select .label {
+            font-size:.68rem;
+            color:#25b84f;
+            margin-bottom:4px;
+        }
+        .fake-select .value {
+            color:#7dff9b;
+            font-weight:bold;
+            font-size:.92rem;
+        }
+        .grid-two { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+        .terminal {
+            background:#020402;
+            border:1px solid rgba(60,255,111,.25);
+            padding:13px;
+            min-height:180px;
+        }
+        .line { font-size:.83rem; line-height:1.65; word-break:break-word; }
+        .key { color:#25b84f; }
+        .white { color:#7dff9b; }
+        .state-v {
+            display:inline-block; min-width:28px; text-align:center;
+            color:#000; background:#3cff6f; font-weight:bold; padding:1px 5px;
+        }
+        .state-u {
+            display:inline-block; min-width:28px; text-align:center;
+            color:#3cff6f; border:1px solid #3cff6f; font-weight:bold; padding:0 5px;
+        }
+        .result-row {
+            border-bottom:1px solid rgba(60,255,111,.12);
+            padding:8px 0;
+            display:flex;
+            justify-content:space-between;
+            gap:16px;
+        }
+        .result-row:last-child { border-bottom:none; }
+        .secondary-example { opacity:.86; }
+        .legend-box {
+            margin-top:14px;
+            border:1px solid rgba(60,255,111,.25);
+            background:rgba(60,255,111,.03);
+            padding:12px;
+        }
+        .legend-grid {
+            display:grid;
+            grid-template-columns:repeat(4,minmax(0,1fr));
+            gap:10px;
+            margin-top:10px;
+        }
+        .legend-item {
+            border:1px solid rgba(60,255,111,.18);
+            padding:10px;
+            min-height:108px;
+        }
+        .legend-code {
+            display:inline-block;
+            min-width:28px;
+            text-align:center;
+            font-weight:bold;
+            margin-bottom:8px;
+            padding:1px 6px;
+        }
+        .legend-v { background:#3cff6f; color:#000; }
+        .legend-f { border:1px solid #3cff6f; color:#3cff6f; }
+        .legend-p { border:1px dashed #3cff6f; color:#7dff9b; }
+        .legend-u { border:1px solid #3cff6f; color:#3cff6f; }
+        .legend-text { font-size:.76rem; line-height:1.45; color:#7dff9b; }
+        .back {
+            display:inline-block;
+            margin-top:auto;
+            color:#000;
+            background:#3cff6f;
+            text-decoration:none;
+            padding:8px 14px;
+            font-weight:bold;
+            width:fit-content;
+        }
+        footer {
+            margin-top:16px;
+            padding-top:10px;
+            border-top:1px solid rgba(60,255,111,.20);
+            display:flex;
+            justify-content:space-between;
+            flex-wrap:wrap;
+            gap:10px;
+            font-size:.74rem;
+        }
+        @media (max-width:820px) {
+            .query-flow,.legend-grid { grid-template-columns:1fr; }
+            .grid-two { grid-template-columns:1fr; }
+        }
+        @media (max-width:520px) {
+            body { padding:12px; }
+            .title { font-size:1rem; }
+            .panel { padding:12px; }
+            .fake-select .value { font-size:.85rem; }
+        }
+    
+        .legend-title-es {
+            display:block;
+            color:#7dff9b;
+            font-weight:bold;
+            font-size:.8rem;
+            line-height:1.35;
+            margin-bottom:3px;
+        }
+        .legend-title-local {
+            display:block;
+            color:#25b84f;
+            font-size:.74rem;
+            line-height:1.35;
+            margin-bottom:8px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="wrap">
+<header>
+    <div class="header-left">
+        <div id="title" class="title">MEED v5 // DEMOSTRACIÓN DE CONSULTA</div>
+        <div class="lang-selector" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="es">ES</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="fr">FR</button>
+            <button class="lang-btn" data-lang="pt">PT</button>
+        </div>
+    </div>
+    <div id="badge" class="badge">STARCRAFT II // MODELO ESTÁTICO</div>
+</header>
+
+<section class="panel">
+    <div id="p0title" class="panel-title">00_CONTEXTO</div>
+    <div id="p0text" class="notice">Simulación visual no funcional. El núcleo de StarCraft II se considera previamente construido y estabilizado. La consulta no realiza ingesta, no accede a la web y no admite lenguaje natural libre.</div>
+</section>
+
+<section class="panel">
+    <div id="p1title" class="panel-title">01_CONSTRUCCIÓN_GUIADA_DE_LA_PREGUNTA</div>
+    <div class="query-flow">
+        <div class="fake-select"><span id="step1" class="label">PASO 1</span><span id="q1" class="value">QUÉ</span></div>
+        <div class="fake-select"><span id="step2" class="label">PASO 2</span><span id="q2" class="value">UNIDADES</span></div>
+        <div class="fake-select"><span id="step3" class="label">PASO 3</span><span id="q3" class="value">SON FUERTES CONTRA</span></div>
+        <div class="fake-select"><span id="step4" class="label">PASO 4</span><span id="q4" class="value">TANQUE DE ASEDIO</span></div>
+    </div>
+</section>
+
+<div class="grid-two">
+<section class="panel">
+    <div id="p2title" class="panel-title">02_CONSULTA_CANÓNICA</div>
+    <div class="terminal">
+        <div class="line"><span id="kDomain" class="key">dominio:</span> <span class="white">starcraft_2</span></div>
+        <div class="line"><span id="kType" class="key">tipo_entidad:</span> <span class="white">unidad</span></div>
+        <div class="line"><span id="kAttr" class="key">atributo:</span> <span class="white">fuerte_contra</span></div>
+        <div class="line"><span id="kValue" class="key">valor:</span> <span class="white">Tanque_de_asedio</span></div>
+        <div class="line"><span id="kMode" class="key">modo:</span> <span class="white">consulta_núcleo_estabilizado</span></div>
+        <div class="line"><span id="kIngest" class="key">ingesta:</span> <span class="white">NO</span></div>
+    </div>
+</section>
+
+<section class="panel">
+    <div id="p3title" class="panel-title">03_RESPUESTA_MEED</div>
+    <div class="terminal">
+        <div class="result-row"><span class="white">Unidad_A</span><span class="state-v">V</span></div>
+        <div class="result-row"><span class="white">Unidad_B</span><span class="state-v">V</span></div>
+        <div class="result-row"><span class="white">Unidad_C</span><span class="state-v">V</span></div>
+        <div class="line" style="margin-top:12px;"><span id="resultKey" class="key">resultado:</span> <span id="resultText" class="white">3 coincidencias verificadas en núcleo.</span></div>
+    </div>
+</section>
+</div>
+
+<section class="panel secondary-example">
+    <div id="p4title" class="panel-title">04_EJEMPLO_DE_ESTADO_U</div>
+    <div class="query-flow" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:12px;">
+        <div class="fake-select"><span id="uStep1" class="label">PASO 1</span><span id="u1" class="value">CUÁL</span></div>
+        <div class="fake-select"><span id="uStep2" class="label">PASO 2</span><span id="u2" class="value">RAZA</span></div>
+        <div class="fake-select"><span id="uStep3" class="label">PASO 3</span><span id="u3" class="value">ES MEJOR</span></div>
+    </div>
+    <div class="terminal" style="min-height:auto;">
+        <div class="line"><span id="stateKey" class="key">estado:</span> <span class="state-u">U</span></div>
+        <div class="line" style="margin-top:8px;"><span id="answerKey" class="key">respuesta:</span> <span id="uAnswer" class="white">Estado Umbralado. El núcleo no dispone de fundamento suficiente para afirmar ni refutar.</span></div>
+    </div>
+</section>
+
+<section class="panel">
+    <div id="p5title" class="panel-title">05_LEYENDA_DE_ESTADOS</div>
+    <div class="legend-box">
+        <div id="legendIntro" class="notice">Estados epistemológicos mostrados por MEED en esta demostración.</div>
+        <div class="legend-grid">
+            <div class="legend-item">
+                <div class="legend-code legend-v">V</div>
+                <span class="legend-title-es">Verdad Consolidada</span>
+                <span id="legendVTitleLocal" class="legend-title-local" style="display:none;"></span>
+                <div id="legendV" class="legend-text">El núcleo contiene fundamento suficiente para sostener la respuesta.</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-code legend-f">F</div>
+                <span class="legend-title-es">Falsedad Consolidada</span>
+                <span id="legendFTitleLocal" class="legend-title-local" style="display:none;"></span>
+                <div id="legendF" class="legend-text">El núcleo contiene base suficiente para excluir la proposición.</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-code legend-p">P</div>
+                <span class="legend-title-es">Evidencia Parcial</span>
+                <span id="legendPTitleLocal" class="legend-title-local" style="display:none;"></span>
+                <div id="legendP" class="legend-text">Existe soporte incompleto o todavía no consolidado.</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-code legend-u">U</div>
+                <span class="legend-title-es">Estado Umbralado</span>
+                <span id="legendUTitleLocal" class="legend-title-local" style="display:none;"></span>
+                <div id="legendU" class="legend-text">El núcleo no dispone de fundamento suficiente para afirmar ni refutar.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<a id="back" class="back" href="index.html?lang=es">VOLVER A MEED5</a>
+
+<footer>
+    <div id="author">AUTOR: J. A. R.</div>
+    <div id="footRight">DEMOSTRACIÓN VISUAL // SIN EJECUCIÓN DEL MOTOR</div>
+</footer>
+
+</div>
+<script>
+const T={
+es:{
+title:"MEED v5 // DEMOSTRACIÓN DE CONSULTA",badge:"STARCRAFT II // MODELO ESTÁTICO",
+p0title:"00_CONTEXTO",p0text:"Simulación visual no funcional. El núcleo de StarCraft II se considera previamente construido y estabilizado. La consulta no realiza ingesta, no accede a la web y no admite lenguaje natural libre.",
+p1title:"01_CONSTRUCCIÓN_GUIADA_DE_LA_PREGUNTA",step1:"PASO 1",step2:"PASO 2",step3:"PASO 3",step4:"PASO 4",q1:"QUÉ",q2:"UNIDADES",q3:"SON FUERTES CONTRA",q4:"TANQUE DE ASEDIO",
+p2title:"02_CONSULTA_CANÓNICA",kDomain:"dominio:",kType:"tipo_entidad:",kAttr:"atributo:",kValue:"valor:",kMode:"modo:",kIngest:"ingesta:",
+p3title:"03_RESPUESTA_MEED",resultKey:"resultado:",resultText:"3 coincidencias verificadas en núcleo.",
+p4title:"04_EJEMPLO_DE_ESTADO_U",uStep1:"PASO 1",uStep2:"PASO 2",uStep3:"PASO 3",u1:"CUÁL",u2:"RAZA",u3:"ES MEJOR",stateKey:"estado:",answerKey:"respuesta:",uAnswer:"Estado Umbralado. El núcleo no dispone de fundamento suficiente para afirmar ni refutar.",
+p5title:"05_LEYENDA_DE_ESTADOS",legendIntro:"Estados epistemológicos mostrados por MEED en esta demostración.",
+legendVTitleLocal:"",legendFTitleLocal:"",legendPTitleLocal:"",legendUTitleLocal:"",
+legendV:"El núcleo contiene fundamento suficiente para sostener la respuesta.",
+legendF:"El núcleo contiene base suficiente para excluir la proposición.",
+legendP:"Existe soporte incompleto o todavía no consolidado.",
+legendU:"El núcleo no dispone de fundamento suficiente para afirmar ni refutar.",
+back:"VOLVER A MEED5",author:"AUTOR: J. A. R.",footRight:"DEMOSTRACIÓN VISUAL // SIN EJECUCIÓN DEL MOTOR"
+},
+en:{
+title:"MEED v5 // QUERY DEMONSTRATION",badge:"STARCRAFT II // STATIC MODEL",
+p0title:"00_CONTEXT",p0text:"Non-functional visual simulation. The StarCraft II core is considered to have been built and stabilized beforehand. The query performs no ingestion, does not access the web, and does not allow unrestricted natural language.",
+p1title:"01_GUIDED_QUESTION_CONSTRUCTION",step1:"STEP 1",step2:"STEP 2",step3:"STEP 3",step4:"STEP 4",q1:"WHICH",q2:"UNITS",q3:"ARE STRONG AGAINST",q4:"SIEGE TANK",
+p2title:"02_CANONICAL_QUERY",kDomain:"domain:",kType:"entity_type:",kAttr:"attribute:",kValue:"value:",kMode:"mode:",kIngest:"ingestion:",
+p3title:"03_MEED_RESPONSE",resultKey:"result:",resultText:"3 verified matches in the core.",
+p4title:"04_U_STATE_EXAMPLE",uStep1:"STEP 1",uStep2:"STEP 2",uStep3:"STEP 3",u1:"WHICH",u2:"RACE",u3:"IS BEST",stateKey:"state:",answerKey:"response:",uAnswer:"Threshold State. The core does not contain sufficient grounds to affirm or refute.",
+p5title:"05_STATE_LEGEND",legendIntro:"Epistemological states shown by MEED in this demonstration.",
+legendVTitleLocal:"Consolidated Truth",legendFTitleLocal:"Consolidated Falsehood",legendPTitleLocal:"Partial Evidence",legendUTitleLocal:"Threshold State",
+legendV:"The core contains sufficient grounds to support the response.",
+legendF:"The core contains sufficient grounds to exclude the proposition.",
+legendP:"Support exists but is incomplete or not yet consolidated.",
+legendU:"The core does not contain sufficient grounds to affirm or refute.",
+back:"BACK TO MEED5",author:"AUTHOR: J. A. R.",footRight:"VISUAL DEMONSTRATION // NO ENGINE EXECUTION"
+},
+fr:{
+title:"MEED v5 // DÉMONSTRATION DE REQUÊTE",badge:"STARCRAFT II // MODÈLE STATIQUE",
+p0title:"00_CONTEXTE",p0text:"Simulation visuelle non fonctionnelle. Le noyau StarCraft II est considéré comme préalablement construit et stabilisé. La requête n'effectue aucune ingestion, n'accède pas au web et n'autorise pas le langage naturel libre.",
+p1title:"01_CONSTRUCTION_GUIDÉE_DE_LA_QUESTION",step1:"ÉTAPE 1",step2:"ÉTAPE 2",step3:"ÉTAPE 3",step4:"ÉTAPE 4",q1:"QUELLES",q2:"UNITÉS",q3:"SONT FORTES CONTRE",q4:"CHAR DE SIÈGE",
+p2title:"02_REQUÊTE_CANONIQUE",kDomain:"domaine :",kType:"type_entité :",kAttr:"attribut :",kValue:"valeur :",kMode:"mode :",kIngest:"ingestion :",
+p3title:"03_RÉPONSE_MEED",resultKey:"résultat :",resultText:"3 correspondances vérifiées dans le noyau.",
+p4title:"04_EXEMPLE_D'ÉTAT_U",uStep1:"ÉTAPE 1",uStep2:"ÉTAPE 2",uStep3:"ÉTAPE 3",u1:"QUELLE",u2:"RACE",u3:"EST LA MEILLEURE",stateKey:"état :",answerKey:"réponse :",uAnswer:"État Seuil. Le noyau ne dispose pas d'un fondement suffisant pour affirmer ni réfuter.",
+p5title:"05_LÉGENDE_DES_ÉTATS",legendIntro:"États épistémologiques affichés par MEED dans cette démonstration.",
+legendVTitleLocal:"Vérité Consolidée",legendFTitleLocal:"Fausseté Consolidée",legendPTitleLocal:"Preuve Partielle",legendUTitleLocal:"État Seuil",
+legendV:"Le noyau contient un fondement suffisant pour soutenir la réponse.",
+legendF:"Le noyau contient un fondement suffisant pour exclure la proposition.",
+legendP:"Un soutien existe, mais il est incomplet ou pas encore consolidé.",
+legendU:"Le noyau ne dispose pas d'un fondement suffisant pour affirmer ni réfuter.",
+back:"RETOUR À MEED5",author:"AUTEUR : J. A. R.",footRight:"DÉMONSTRATION VISUELLE // SANS EXÉCUTION DU MOTEUR"
+},
+pt:{
+title:"MEED v5 // DEMONSTRAÇÃO DE CONSULTA",badge:"STARCRAFT II // MODELO ESTÁTICO",
+p0title:"00_CONTEXTO",p0text:"Simulação visual não funcional. O núcleo de StarCraft II é considerado previamente construído e estabilizado. A consulta não realiza ingestão, não acede à web e não admite linguagem natural livre.",
+p1title:"01_CONSTRUÇÃO_GUIADA_DA_PERGUNTA",step1:"PASSO 1",step2:"PASSO 2",step3:"PASSO 3",step4:"PASSO 4",q1:"QUAIS",q2:"UNIDADES",q3:"SÃO FORTES CONTRA",q4:"TANQUE DE CERCO",
+p2title:"02_CONSULTA_CANÓNICA",kDomain:"domínio:",kType:"tipo_entidade:",kAttr:"atributo:",kValue:"valor:",kMode:"modo:",kIngest:"ingestão:",
+p3title:"03_RESPOSTA_MEED",resultKey:"resultado:",resultText:"3 correspondências verificadas no núcleo.",
+p4title:"04_EXEMPLO_DE_ESTADO_U",uStep1:"PASSO 1",uStep2:"PASSO 2",uStep3:"PASSO 3",u1:"QUAL",u2:"RAÇA",u3:"É A MELHOR",stateKey:"estado:",answerKey:"resposta:",uAnswer:"Estado Limiar. O núcleo não dispõe de fundamento suficiente para afirmar nem refutar.",
+p5title:"05_LEGENDA_DOS_ESTADOS",legendIntro:"Estados epistemológicos apresentados pelo MEED nesta demonstração.",
+legendVTitleLocal:"Verdade Consolidada",legendFTitleLocal:"Falsidade Consolidada",legendPTitleLocal:"Evidência Parcial",legendUTitleLocal:"Estado Limiar",
+legendV:"O núcleo contém fundamento suficiente para sustentar a resposta.",
+legendF:"O núcleo contém fundamento suficiente para excluir a proposição.",
+legendP:"Existe suporte, mas é incompleto ou ainda não consolidado.",
+legendU:"O núcleo não dispõe de fundamento suficiente para afirmar nem refutar.",
+back:"VOLTAR AO MEED5",author:"AUTOR: J. A. R.",footRight:"DEMONSTRAÇÃO VISUAL // SEM EXECUÇÃO DO MOTOR"
+}
+};
+
+function setLang(lang){
+    if(!T[lang]) lang="es";
+    document.documentElement.lang=lang;
+    for(const [id,value] of Object.entries(T[lang])){
+        const el=document.getElementById(id);
+        if(el) el.textContent=value;
+    }
+    document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("active",b.dataset.lang===lang));
+    ["legendVTitleLocal","legendFTitleLocal","legendPTitleLocal","legendUTitleLocal"].forEach(id=>{
+        const el=document.getElementById(id);
+        if(el) el.style.display = lang==="es" ? "none" : "block";
+    });
+    document.getElementById("back").href="index.html?lang="+lang;
+    localStorage.setItem("meed_lang",lang);
+}
+document.querySelectorAll(".lang-btn").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
+const qp=new URLSearchParams(location.search).get("lang");
+setLang(qp || localStorage.getItem("meed_lang") || "es");
+</script>
+</body>
+</html>
